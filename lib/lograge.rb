@@ -12,6 +12,7 @@ require 'lograge/log_subscriber'
 require 'active_support/core_ext/module/attribute_accessors'
 require 'active_support/core_ext/string/inflections'
 require 'active_support/ordered_options'
+require 'lograge/custom_event'
 
 # rubocop:disable ModuleLength
 module Lograge
