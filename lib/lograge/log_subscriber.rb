@@ -2,12 +2,12 @@ require 'json'
 require 'action_pack'
 require 'active_support/core_ext/class/attribute'
 require 'active_support/log_subscriber'
-
+require 'awesome_print'
 module Lograge
   class RequestLogSubscriber < ActiveSupport::LogSubscriber
     def process_action(event)
       return if Lograge.ignore?(event)
-
+      pp event.payload 
       payload = event.payload
       data = extract_request(event, payload)
       data = before_format(data, payload)

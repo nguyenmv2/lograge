@@ -122,11 +122,11 @@ module Lograge
     disable_rack_cache_verbose_output
     keep_original_rails_log
 
-    attach_to_action_controller
+   # attach_to_action_controller
     if @subscribe_to_everything
       attach_to_active_record
-      attach_to_action_view
-      attach_to_action_mailer
+     # attach_to_action_view
+     # attach_to_action_mailer
     end
 
     set_lograge_log_options
@@ -164,7 +164,7 @@ module Lograge
     Lograge.logger = lograge_config.logger
     Lograge.custom_options = lograge_config.custom_options
     Lograge.before_format = lograge_config.before_format
-    Lograge.log_level = lograge_config.log_level || :info
+    Lograge.log_level = :info
   end
 
   def disable_rack_cache_verbose_output
