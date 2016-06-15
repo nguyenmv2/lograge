@@ -18,7 +18,7 @@ require 'lograge/custom_event'
 module Lograge
   module_function
 
-  mattr_accessor :logger, :application, :ignore_tests
+  mattr_accessor :logger, :application, :ignore_tests, :subscribe_to_everything
 
   # Custom options that will be appended to log line
   #
@@ -123,6 +123,12 @@ module Lograge
     keep_original_rails_log
 
     attach_to_action_controller
+    if @subscribe_to_everything
+      attach_to_active_record
+      attach_to_action_view
+      attach_to_action_mailer
+    end
+
     set_lograge_log_options
     support_deprecated_config # TODO: Remove with version 1.0
     set_formatter
@@ -140,6 +146,18 @@ module Lograge
 
   def attach_to_action_controller
     Lograge::RequestLogSubscriber.attach_to :action_controller
+  end
+
+  def attach_to_active_record
+    Lograge::RequestLogSubscriber.attach_to :active_record
+  end
+
+  def attach_to_action_view
+    Lograge::RequestLogSubscriber.attach_to :action_view
+  end
+
+  def attach_to_action_mailer
+    Lograge::RequestLogSubscriber.attach_to :action_mailer
   end
 
   def set_lograge_log_options
