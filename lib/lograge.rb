@@ -19,7 +19,7 @@ module Lograge
   module_function
 
   mattr_accessor :logger, :application, :ignore_tests, :subscribe_to_everything
-
+  self.subscribe_to_everything = false
   # Custom options that will be appended to log line
   #
   # Currently supported formats are:
