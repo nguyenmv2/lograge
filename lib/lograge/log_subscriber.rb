@@ -7,7 +7,6 @@ module Lograge
   class RequestLogSubscriber < ActiveSupport::LogSubscriber
     def process_action(event)
       return if Lograge.ignore?(event)
-      pp event.payload 
       payload = event.payload
       data = extract_request(event, payload)
       data = before_format(data, payload)
@@ -25,11 +24,7 @@ module Lograge
     end
 
     def logger
-      logger = Lograge.logger.presence || super
-      logger.level=1
-      pp logger
-      logger
-
+      Lograge.logger.presence || super
     end
 
     private
