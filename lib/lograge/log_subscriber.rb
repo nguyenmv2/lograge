@@ -25,7 +25,9 @@ module Lograge
     end
 
     def logger
-      Lograge.logger.presence || super
+      logger = Lograge.logger.presence || super
+      logger.level=(info)
+      logger
     end
 
     private
