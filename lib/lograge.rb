@@ -124,8 +124,8 @@ module Lograge
 
    # attach_to_action_controller
     if @subscribe_to_everything
-      attach_to_active_record
-     # attach_to_action_view
+      #attach_to_active_record
+      attach_to_action_view
      # attach_to_action_mailer
     end
 
