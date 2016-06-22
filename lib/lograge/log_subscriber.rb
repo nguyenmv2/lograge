@@ -7,6 +7,7 @@ module Lograge
   class RequestLogSubscriber < ActiveSupport::LogSubscriber
     def process_action(event)
       pp("Event being called #{event}")
+      pp(event.payload)
       return if Lograge.ignore?(event)
       payload = event.payload
       data = extract_request(event, payload)
