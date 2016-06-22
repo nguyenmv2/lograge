@@ -56,7 +56,7 @@ module Lograge
   #  - An array of strings representing controller actions
   #  - An object that responds to call with an event argument and returns
   #    true iff the event should be ignored.
-  #
+      #
   # The action ignores are given to 'ignore_actions'. The callable ignores
   # are given to 'ignore'.  Both methods can be called multiple times, which
   # just adds more ignore conditions to a list that is checked before logging.
@@ -97,6 +97,10 @@ module Lograge
 
   def remove_existing_log_subscriptions
     ActiveSupport::LogSubscriber.log_subscribers.each do |subscriber|
+      pp '======'
+      pp subscriber     
+      pretty_print_available_events(subscriber)
+      pp '-----'
       case subscriber
       when ActionView::LogSubscriber
         unsubscribe(:action_view, subscriber)
@@ -123,14 +127,18 @@ module Lograge
     keep_original_rails_log
 
     attach_to_action_controller
-    if @subscribe_to_everything
-      #attach_to_active_record
-    end
+    attach_to_active_record
+    attach_to_action_view
 
     set_lograge_log_options
     support_deprecated_config # TODO: Remove with version 1.0
     set_formatter
     set_ignores
+  end
+
+  def pretty_print_available_events(subscriber)
+    events = subscriber.public_methods(false).reject { |method| method.to_s == 'call' }
+    pp events
   end
 
   def set_ignores

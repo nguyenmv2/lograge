@@ -88,6 +88,7 @@ module Lograge
     def before_format(data, payload)
       Lograge.before_format(data, payload)
     end
+    
 
     def extract_runtimes(event, payload)
       data = { duration: event.duration.to_f.round(2) }
