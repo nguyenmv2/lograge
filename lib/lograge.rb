@@ -97,10 +97,6 @@ module Lograge
 
   def remove_existing_log_subscriptions
     ActiveSupport::LogSubscriber.log_subscribers.each do |subscriber|
-      pp '======'
-      pp subscriber     
-      pretty_print_available_events(subscriber)
-      pp '-----'
       case subscriber
       when ActionView::LogSubscriber
         unsubscribe(:action_view, subscriber)
@@ -125,11 +121,8 @@ module Lograge
     self.application = app
     disable_rack_cache_verbose_output
     keep_original_rails_log
-
     attach_to_action_controller
-    attach_to_active_record
-    attach_to_action_view
-
+    #subscribe_to_custom_events
     set_lograge_log_options
     support_deprecated_config # TODO: Remove with version 1.0
     set_formatter
@@ -165,7 +158,10 @@ module Lograge
   def attach_to_action_mailer
     Lograge::RequestLogSubscriber.attach_to :action_mailer
   end
-
+  
+  def subscribe_to_custom_events
+    Lograge::RequestLogSubscribe
+  end
   def set_lograge_log_options
     Lograge.logger = lograge_config.logger
     Lograge.custom_options = lograge_config.custom_options
